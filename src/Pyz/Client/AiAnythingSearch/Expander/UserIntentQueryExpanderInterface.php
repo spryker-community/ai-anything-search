@@ -1,10 +1,10 @@
 <?php
 
-namespace Pyz\Client\AiAnythingSearch;
+namespace Pyz\Client\AiAnythingSearch\Expander;
 
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
-interface AiAnythingSearchClientInterface
+interface UserIntentQueryExpanderInterface
 {
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
