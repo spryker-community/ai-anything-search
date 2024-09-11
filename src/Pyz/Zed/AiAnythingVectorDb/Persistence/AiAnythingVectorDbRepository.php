@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\ProductVectorDbStorage\Persistence;
+namespace Pyz\Zed\AiAnythingVectorDb\Persistence;
 
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
@@ -11,12 +11,16 @@ use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
- * @method \Pyz\Zed\ProductVectorDbStorage\Persistence\ProductVectorDbStoragePersistenceFactory getFactory()
+ * @method \Pyz\Zed\AiAnythingVectorDb\Persistence\ProductVectorDbStoragePersistenceFactory getFactory()
  */
-class ProductVectorDbStorageRepository extends AbstractRepository implements ProductVectorDbStorageRepositoryInterface
+class AiAnythingVectorDbRepository extends AbstractRepository implements AiAnythingVectorDbRepositoryInterface
 {
-
-    public function queryProductData(string $id)
+    /**
+     * @param string $id
+     *
+     * @return array
+     */
+    public function queryProductData(string $id): array
     {
         $productData = SpyProductAbstractQuery::create()
             ->filterByIdProductAbstract($id)->findOne();
