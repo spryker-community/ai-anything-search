@@ -16,21 +16,31 @@ xxx
     - GEMINI_API_KEY with key or add key in **config/shared/config_default.php**
 
     ```php
-    $config[ImageToTextConstants::GEMINI_API_KEY]  = 'api_key';
+    $config[AiAnythingEmbeddingConstants::GEMINI_API_KEY]  = 'api_key';
     ```
 
-    - GEMINI_HOST_ENDPOINT with API endpoint or add key in **config/shared/config_default.php**
+    - GEMINI_API_URL with API endpoint and model except API Key or add key in **config/shared/config_default.php**
 
     ```php
-    $config[ImageToTextConstants::GEMINI_HOST_ENDPOINT]  = 'host_url';
+    $config[AiAnythingEmbeddingConstants::GEMINI_API_URL] = 'api_url';
    ```
 
     - PINECONE_API_KEY with key or add key in **config/shared/config_default.php**
 
     ```php
-    $config[ImageToTextConstants::GEMINI_HOST_ENDPOINT]  = 'host_url';
+   $config[PineconeConstants::PINECONE_API_KEY]  = 'api_key';
     ```
 
+- PINECONE_API_VERSION with key or add key in **config/shared/config_default.php**
+
+    ```php
+   $config[PineconeConstants::PINECONE_API_VERSION]  = 'api_version';
+    ```
+    - PINECONE_INDEX_URL with API endpoint or add key in **config/shared/config_default.php**
+
+      ```php
+      $config[AiAnythingEmbeddingConstants::PINECONE_INDEX_URL] = 'api_url';
+   ```
 ## Modules and path:
 
 *config/Shared/config_default.php has two configuration:*

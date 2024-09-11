@@ -31,7 +31,9 @@ use Generated\Shared\Transfer\SearchEndpointAvailableTransfer;
 use Generated\Shared\Transfer\SearchEndpointRemovedTransfer;
 use Generated\Shared\Transfer\SubmitPaymentTaxInvoiceTransfer;
 use Monolog\Logger;
+use Pyz\Shared\AiAnythingEmbedding\AiAnythingEmbeddingConstants;
 use Pyz\Shared\Console\ConsoleConstants;
+use Pyz\Shared\Pinecone\PineconeConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
 use Pyz\Yves\ShopApplication\YvesBootstrap;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
@@ -874,3 +876,12 @@ $config[GlueStorefrontApiApplicationConstants::GLUE_STOREFRONT_CORS_ALLOW_ORIGIN
 $config[PushNotificationWebPushPhpConstants::VAPID_PUBLIC_KEY] = getenv('SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_PUBLIC_KEY');
 $config[PushNotificationWebPushPhpConstants::VAPID_PRIVATE_KEY] = getenv('SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_PRIVATE_KEY');
 $config[PushNotificationWebPushPhpConstants::VAPID_SUBJECT] = getenv('SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_SUBJECT');
+
+// ----------------------------------------------------------------------------
+// ------------------------------ AI ---------------------------
+// ----------------------------------------------------------------------------
+$config[PineconeConstants::PINECONE_API_KEY] = getenv('PINECONE_API_KEY');
+$config[PineconeConstants::PINECONE_API_VERSION] = getenv('PINECONE_API_VERSION');
+$config[PineconeConstants::PINECONE_INDEX_URL]  = getenv('PINECONE_INDEX_URL');
+$config[AiAnythingEmbeddingConstants::GEMINI_API_KEY] = getenv('GEMINI_API_KEY');
+$config[AiAnythingEmbeddingConstants::GEMINI_API_URL] = getenv('GEMINI_API_URL');

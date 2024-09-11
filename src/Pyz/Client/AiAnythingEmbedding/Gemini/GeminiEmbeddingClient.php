@@ -9,10 +9,14 @@ use GuzzleHttp\ClientInterface;
 class GeminiEmbeddingClient implements GeminiEmbeddingClientInterface
 {
     private ClientInterface $client;
+    private string $apiKey;
+    private string $apiUrl;
 
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $client, string $apiKey, string $apiUrl)
     {
         $this->client = $client;
+        $this->apiKey = $apiKey;
+        $this->apiUrl = $apiUrl;
     }
 
     public function getEmbeddings(string $text): array
@@ -28,7 +32,7 @@ class GeminiEmbeddingClient implements GeminiEmbeddingClientInterface
             ],
         ];
 
-        $response = $this->client->request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=AIzaSyCHhDugB-jwpNvQRYkyQF9ctSDXKVQ1lQo', [
+        $response = $this->client->request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key='.$this->apiKey, [
             'headers' => [
                 'Content-Type' => 'application/json',
             ],

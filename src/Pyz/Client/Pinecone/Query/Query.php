@@ -12,14 +12,22 @@ class Query implements QueryInterface
 {
     private ClientInterface $httpClient;
     private AiAnythingEmbeddingClientInterface $aiAnythingEmbeddingClient;
+    private string $apiKey;
+    private string $apiVersion;
+    private string $apiUrl;
 
     public function __construct(
         ClientInterface $httpClient,
-        AiAnythingEmbeddingClientInterface $aiAnythingEmbeddingClient
+        AiAnythingEmbeddingClientInterface $aiAnythingEmbeddingClient,
+        string $apiKey,
+        string $apiVersion,
+        string $apiUrl,
     ) {
         $this->httpClient = $httpClient;
         $this->aiAnythingEmbeddingClient = $aiAnythingEmbeddingClient;
-
+        $this->apiKey = $apiKey;
+        $this->apiVersion = $apiVersion;
+        $this->apiUrl = $apiUrl;
     }
 
     public function query(string $text, int $limit = 30, bool $includeValues = true): array
@@ -31,10 +39,10 @@ class Query implements QueryInterface
             'includeValues' => $includeValues,
         ];
 
-        $response = $this->httpClient->request('POST', 'https://gemini-kwgdoea.svc.aped-4627-b74a.pinecone.io/query', [
+        $response = $this->httpClient->request('POST', $this->apiUrl.'/query', [
             'headers' => [
-                'API-Key' => '2f186b01-6252-4084-9d81-c2423dd98b77',
-                'X-Pinecone-API-Version' => '2024-07',
+                'API-Key' => $this->apiKey,
+                'X-Pinecone-API-Version' => $this->apiVersion,
                 'Content-Type' => 'application/json',
             ],
             'body' => json_encode($requestBody)

@@ -13,7 +13,7 @@ use Pyz\Client\AiAnythingEmbedding\Gemini\GeminiEmbeddingClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 /**
- * @method \Pyz\Client\ExampleProductSalePage\ExampleProductSalePageConfig getConfig()
+ * @method \Pyz\Client\AiAnythingEmbedding\AiAnythingEmbeddingConfig getConfig()
  */
 class AiAnythingEmbeddingFactory extends AbstractFactory
 {
@@ -23,7 +23,9 @@ class AiAnythingEmbeddingFactory extends AbstractFactory
     public function getGeminiEmbeddingClient(): GeminiEmbeddingClientInterface
     {
         return new GeminiEmbeddingClient(
-            $this->getGuzlleHttpClient()
+            $this->getGuzlleHttpClient(),
+            $this->getConfig()->getApiKey(),
+            $this->getConfig()->getApiUrl()
         );
     }
 
