@@ -43,7 +43,9 @@ class ProductDataToVectorDbWriter
                 $data[] = sprintf('Category: %s', $category);
             }
 
-            $this->pineconeClient->upsert($sku, $data, []);
+            $this->pineconeClient->upsert($sku, $data, [
+                'category' => $category
+            ]);
         }
     }
 }
