@@ -6,6 +6,7 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\MultiMatch;
 use InvalidArgumentException;
+use Pyz\Client\Pinecone\PineconeClientInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class UserIntentQueryExpander implements UserIntentQueryExpanderInterface
@@ -14,6 +15,13 @@ class UserIntentQueryExpander implements UserIntentQueryExpanderInterface
      * @var string
      */
     protected const SKU = 'search-result-data.abstract_sku';
+
+    public function __construct(
+        protected readonly PineconeClientInterface $pineconeClient
+    )
+    {
+
+    }
 
     /**
      * @inheritDoc
@@ -27,17 +35,16 @@ class UserIntentQueryExpander implements UserIntentQueryExpanderInterface
         $boolQuery = $this->getBoolQuery($searchQuery->getSearchQuery());
 
         // embed the query & search for vector
+        $results = $this->pineconeClient->query($requestParameters['q'], 50,  false);
 
         // extract SKUs from result
-        $boostedSkus = $this->resolveSkusFromResponse(null);
+        $boostedSkus = $this->resolveSkusFromResponse($results);
 
         // inject in search Query (as OR-statement)
         $this->injectSearch($boostedSkus, $boolQuery);
 
         // boost in term query (clustered by range?)
         $this->injectBoosting($boostedSkus, $boolQuery);
-
-        dump(json_encode($boolQuery->toArray()));
 
         return $searchQuery;
     }
@@ -71,28 +78,7 @@ class UserIntentQueryExpander implements UserIntentQueryExpanderInterface
      */
     protected function resolveSkusFromResponse($response = null): array
     {
-        $response = $response ?? [
-            [
-                'weight' => -0.234,
-                'sku' => '123'
-            ],
-            [
-                'weight' => 0.234,
-                'sku' => '002'
-            ],
-            [
-                'weight' => 0.434,
-                'sku' => '243'
-            ],
-            [
-                'weight' => 0.534,
-                'sku' => '012'
-            ],
-            [
-                'weight' => 0.823,
-                'sku' => '036'
-            ],
-        ];
+        $response = array_map(fn($entry) => ['weight' => $entry['score'], 'sku' => $entry['id']], $response);
 
         return array_filter($response, fn($entry) => $entry['weight'] > 0);
     }

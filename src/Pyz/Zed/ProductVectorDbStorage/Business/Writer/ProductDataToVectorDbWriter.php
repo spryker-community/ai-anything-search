@@ -31,6 +31,7 @@ class ProductDataToVectorDbWriter
             $sku = $productData['sku'];
             $data = [
                 sprintf('Name: %s', $productData['name']),
+                sprintf('Description: %s', $productData['description']),
             ];
 
             $attributes = $productData['attributes'] !== '' ? json_decode($productData['attributes']) : [];

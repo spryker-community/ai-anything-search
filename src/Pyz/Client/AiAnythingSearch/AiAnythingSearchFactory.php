@@ -4,6 +4,7 @@ namespace Pyz\Client\AiAnythingSearch;
 
 use Pyz\Client\AiAnythingSearch\Expander\UserIntentQueryExpander;
 use Pyz\Client\AiAnythingSearch\Expander\UserIntentQueryExpanderInterface;
+use Pyz\Client\Pinecone\PineconeClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class AiAnythingSearchFactory extends AbstractFactory
@@ -13,6 +14,16 @@ class AiAnythingSearchFactory extends AbstractFactory
      */
     public function createQueryExpander(): UserIntentQueryExpanderInterface
     {
-        return new UserIntentQueryExpander();
+        return new UserIntentQueryExpander(
+            $this->getPineconeClient()
+        );
+    }
+
+    /**
+     * @return \Pyz\Client\Pinecone\PineconeClientInterface
+     */
+    protected function getPineconeClient(): PineconeClientInterface
+    {
+        return $this->getProvidedDependency(AiAnythingSearchDependencyProvider::PINECONE_CLIENT);
     }
 }

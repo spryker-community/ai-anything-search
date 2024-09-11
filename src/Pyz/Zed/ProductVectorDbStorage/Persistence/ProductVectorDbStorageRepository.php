@@ -46,6 +46,7 @@ class ProductVectorDbStorageRepository extends AbstractRepository implements Pro
             'name' => $localizedAttr->getName(),
             'sku' => $productData->getSku(),
             'categories' => $categoryNames,
+            'description' => $localizedAttr->getDescription(),
         ];
     }
 
