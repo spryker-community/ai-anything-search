@@ -6,7 +6,7 @@ namespace Pyz\Client\Pinecone;
 
 interface PineconeClientInterface
 {
-    public function query(array $vector, int $topK, bool $includeValues): array;
+    public function query(string $text, int $limit = 30, bool $includeValues = true): array;
 
-    public function upsert(array $vectors): int;
+    public function upsert(string $id, array $data, array $metadata): int;
 }

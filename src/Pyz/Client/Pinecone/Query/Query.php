@@ -6,21 +6,28 @@ namespace Pyz\Client\Pinecone\Query;
 
 use Exception;
 use GuzzleHttp\ClientInterface;
+use Pyz\Client\AiAnythingEmbedding\AiAnythingEmbeddingClientInterface;
 
 class Query implements QueryInterface
 {
     private ClientInterface $httpClient;
+    private AiAnythingEmbeddingClientInterface $aiAnythingEmbeddingClient;
 
-    public function __construct(ClientInterface $httpClient)
-    {
+    public function __construct(
+        ClientInterface $httpClient,
+        AiAnythingEmbeddingClientInterface $aiAnythingEmbeddingClient
+    ) {
         $this->httpClient = $httpClient;
+        $this->aiAnythingEmbeddingClient = $aiAnythingEmbeddingClient;
+
     }
 
-    public function query(array $vector, int $topK, bool $includeValues): array
+    public function query(string $text, int $limit = 30, bool $includeValues = true): array
     {
+        $vector = $this->aiAnythingEmbeddingClient->getEmbeddings($text);
         $requestBody = [
             'vector' => $vector,
-            'topK' => $topK,
+            'topK' => $limit,
             'includeValues' => $includeValues,
         ];
 
@@ -37,6 +44,18 @@ class Query implements QueryInterface
             throw new Exception(sprintf('Failed to query: %s', $response->getBody()->getContents()));
         }
 
-        return json_decode($response->getBody()->getContents(), true);
+        $products = [];
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        if (!isset($data['matches'])) {
+            return $products;
+        }
+
+        foreach ($data['matches'] as $product) {
+            unset($product['values']);
+            $products[] = $product;
+        }
+
+        return $products;
     }
 }

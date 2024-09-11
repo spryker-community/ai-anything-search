@@ -5,23 +5,24 @@ declare(strict_types=1);
 namespace Pyz\Client\Pinecone;
 
 use GuzzleHttp\Client;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method \Pyz\Client\Pinecone\PineconeFactory getFactory()
  */
-class PineconeClient implements PineconeClientInterface
+class PineconeClient  extends AbstractClient implements PineconeClientInterface
 {
-    public function query(array $vector, int $topK, bool $includeValues): array
+    public function query(string $text, int $limit = 30, bool $includeValues = true): array
     {
         return $this->getFactory()
             ->createQuery()
-            ->query($vector, $topK, $includeValues);
+            ->query($text, $limit, $includeValues);
     }
 
-    public function upsert(array $vectors): int
+    public function upsert(string $id, array $data, array $metadata): int
     {
         return $this->getFactory()
             ->createUpsert()
-            ->upsert($vectors);
+            ->upsert($id, $data, $metadata);
     }
 }

@@ -6,5 +6,5 @@ namespace Pyz\Client\Pinecone\Query;
 
 interface QueryInterface
 {
-    public function query(array $vector, int $topK, bool $includeValues): array;
+    public function query(string $text, int $limit = 30, bool $includeValues = true): array;
 }

@@ -6,5 +6,5 @@ namespace Pyz\Client\Pinecone\Upsert;
 
 interface UpsertInterface
 {
-    public function upsert(array $vectors): int;
+    public function upsert(string $id, array $data, array $metadata): int;
 }
