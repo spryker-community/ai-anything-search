@@ -1,0 +1,17 @@
+{
+    "mappings": {
+        "page": {
+            "properties": {
+                "search-result-data": {
+                    "type": "object",
+                    "include_in_all": false,
+                    "properties": {
+                        "abstract_sku": {
+                            "type": "keyword"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
