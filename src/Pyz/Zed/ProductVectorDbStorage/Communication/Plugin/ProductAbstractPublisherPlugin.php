@@ -2,11 +2,9 @@
 
 namespace Pyz\Zed\ProductVectorDbStorage\Communication\Plugin;
 
-use Pyz\Zed\ProductVectorDbStorage\Business\Facade\ProductVectorDbStorageFacadeInterface;
-use Spryker\Shared\CategoryStorage\CategoryStorageConfig;
+use Pyz\Zed\ProductVectorDbStorage\Business\ProductVectorDbStorageFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
-use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
@@ -16,7 +14,7 @@ class ProductAbstractPublisherPlugin extends AbstractPlugin implements Publisher
 {
     /**
      * {@inheritDoc}
-     * - 
+     * -
      * - Publishes store data to Vector Database
      *
      * @api
@@ -28,7 +26,11 @@ class ProductAbstractPublisherPlugin extends AbstractPlugin implements Publisher
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $this->getFacade()->writeProductDataToVectorDb($transfers);
+        try{
+            $this->getFacade()->writeProductDataToVectorDb($transfers);
+        } catch (\Throwable $exception){
+            dd($exception);
+        }
     }
 
     /**
@@ -44,12 +46,6 @@ class ProductAbstractPublisherPlugin extends AbstractPlugin implements Publisher
             ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE,
             ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE,
             ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
-            // ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_CREATE,
-            // ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_UPDATE,
-            // CategoryStorageConfig::ENTITY_SPY_CATEGORY_CREATE,
-            // CategoryStorageConfig::ENTITY_SPY_CATEGORY_UPDATE,
-            // CategoryStorageConfig::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE,
-            // CategoryStorageConfig::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE,
         ];
     }
 }

@@ -2,26 +2,48 @@
 
 namespace Pyz\Zed\ProductVectorDbStorage\Business\Writer;
 
-use Pyz\Client\Pinecone\PineconeClient;
 use Pyz\Client\Pinecone\PineconeClientInterface;
-use Pyz\Client\Pinecone\Upsert\Upsert;
+use Pyz\Zed\ProductVectorDbStorage\Persistence\ProductVectorDbStorageRepository;
 
-class ProductDataToVectorDbWriter 
+class ProductDataToVectorDbWriter
 {
-    private PineconeClientInterface $pineconeClient;
-
-
-    public function __construct(PineconeClientInterface $pineconeClient)
+    /**
+     * @param \Pyz\Client\Pinecone\PineconeClientInterface $pineconeClient
+     */
+    public function __construct(
+        protected readonly PineconeClientInterface $pineconeClient,
+        protected readonly ProductVectorDbStorageRepository $repository,
+    )
     {
-        $this->pineconeClient = $pineconeClient;
     }
-    
-    public function write(array $transfers): void {
 
-        dd($transfers);
+    /**
+     * @param array $transfers
+     *
+     * @return void
+     */
+    public function write(array $transfers): void
+    {
+        /** @var \Generated\Shared\Transfer\EventEntityTransfer $transfer */
         foreach ($transfers as $transfer) {
-            $this->pineconeClient->upsert($sku, $data, $metadata);
-        }
+            $productData = $this->repository->queryProductData($transfer->getId());
 
+            $sku = $productData['sku'];
+            $data = [
+                sprintf('Name: %s', $productData['name']),
+            ];
+
+            $attributes = $productData['attributes'] !== '' ? json_decode($productData['attributes']) : [];
+
+            foreach ($attributes as  $attribute => $value) {
+                $data[] = sprintf('%s: %s', str_replace('_', ' ', ucwords($attribute, '_')), $value);
+            }
+
+            foreach ($productData['categories'] as  $category) {
+                $data[] = sprintf('Category: %s', $category);
+            }
+
+            $this->pineconeClient->upsert($sku, $data, []);
+        }
     }
 }

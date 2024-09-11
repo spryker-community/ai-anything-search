@@ -32,7 +32,7 @@ class Upsert implements UpsertInterface
 
     public function upsert(string $id, array $data, array $metadata): int
     {
-        $vector = $this->aiAnythingEmbeddingClient->getEmbeddings(implode(',', $data));
+        $vector = $this->aiAnythingEmbeddingClient->getEmbeddings(implode(', ', $data));
         $data =[
             'vectors' => [
                 [
