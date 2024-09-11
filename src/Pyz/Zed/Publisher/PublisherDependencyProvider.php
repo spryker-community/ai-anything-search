@@ -110,6 +110,7 @@ use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\Store\StoreSynchroni
 use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\Store\StoreWritePublisherPlugin;
 use Spryker\Zed\TaxProductStorage\Communication\Plugin\Publisher\TaxProductPublisherTriggerPlugin;
 use Spryker\Zed\TaxStorage\Communication\Plugin\Publisher\TaxSetPublisherTriggerPlugin;
+use Pyz\Zed\ProductVectorDbStorage\Communication\Plugin\ProductAbstractPublisherPlugin;
 
 class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
 {
@@ -136,6 +137,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getAssetStoragePlugins(),
             $this->getCustomerStoragePlugins(),
             $this->getProductMessageBrokerPlugins(),
+            $this->getProductDataToVectorDbPublisherPluigns(),
         );
     }
 
@@ -402,6 +404,13 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     {
         return [
             new CategoryStoreProductAbstractPageSearchWritePublisherPlugin(),
+        ];
+    }
+
+    private function getProductDataToVectorDbPublisherPluigns(): array
+    {
+        return [
+            new ProductAbstractPublisherPlugin(),
         ];
     }
 }
