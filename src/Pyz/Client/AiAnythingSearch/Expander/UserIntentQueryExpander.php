@@ -6,7 +6,7 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\MultiMatch;
 use InvalidArgumentException;
-use Pyz\Client\Pinecone\PineconeClientInterface;
+use Pyz\Client\AiAnythingVectorDb\AiAnythingVectorDbClientInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class UserIntentQueryExpander implements UserIntentQueryExpanderInterface
@@ -16,11 +16,12 @@ class UserIntentQueryExpander implements UserIntentQueryExpanderInterface
      */
     protected const SKU = 'search-result-data.abstract_sku';
 
+    /**
+     * @param \Pyz\Client\AiAnythingVectorDb\AiAnythingVectorDbClientInterface $vectorDbClient
+     */
     public function __construct(
-        protected readonly PineconeClientInterface $pineconeClient
-    )
-    {
-
+        protected readonly AiAnythingVectorDbClientInterface $vectorDbClient
+    ) {
     }
 
     /**
@@ -35,7 +36,7 @@ class UserIntentQueryExpander implements UserIntentQueryExpanderInterface
         $boolQuery = $this->getBoolQuery($searchQuery->getSearchQuery());
 
         // embed the query & search for vector
-        $results = $this->pineconeClient->query($requestParameters['q'], 50,  false);
+        $results = $this->vectorDbClient->query($requestParameters['q'], 50,  false);
 
         // extract SKUs from result
         $boostedSkus = $this->resolveSkusFromResponse($results);
@@ -72,11 +73,11 @@ class UserIntentQueryExpander implements UserIntentQueryExpanderInterface
     }
 
     /**
-     * @param $response
+     * @param array $response
      *
      * @return array
      */
-    protected function resolveSkusFromResponse($response = null): array
+    protected function resolveSkusFromResponse(array $response): array
     {
         $response = array_map(fn($entry) => ['weight' => $entry['score'], 'sku' => $entry['id']], $response);
 

@@ -7,6 +7,7 @@
 
 namespace Pyz\Zed\Publisher;
 
+use Pyz\Zed\AiAnythingVectorDb\Communication\Plugin\ProductAbstractPublisherPlugin;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Shared\PublishAndSynchronizeHealthCheck\PublishAndSynchronizeHealthCheckConfig;
 use Spryker\Zed\AssetStorage\Communication\Plugin\Publisher\Asset\AssetDeletePublisherPlugin;
@@ -110,7 +111,6 @@ use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\Store\StoreSynchroni
 use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\Store\StoreWritePublisherPlugin;
 use Spryker\Zed\TaxProductStorage\Communication\Plugin\Publisher\TaxProductPublisherTriggerPlugin;
 use Spryker\Zed\TaxStorage\Communication\Plugin\Publisher\TaxSetPublisherTriggerPlugin;
-use Pyz\Zed\ProductVectorDbStorage\Communication\Plugin\ProductAbstractPublisherPlugin;
 
 class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
 {

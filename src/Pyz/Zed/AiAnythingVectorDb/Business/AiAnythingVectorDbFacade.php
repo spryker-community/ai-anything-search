@@ -1,13 +1,13 @@
 <?php
 
-namespace Pyz\Zed\ProductVectorDbStorage\Business;
+namespace Pyz\Zed\AiAnythingVectorDb\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ProductVectorDbStorageBusinessFactory getFactory()
+ * @method AiAnythingVectorDbBusinessFactory getFactory()
  */
-class ProductVectorDbStorageFacade extends AbstractFacade implements ProductVectorDbStorageFacadeInterface
+class AiAnythingVectorDbFacade extends AbstractFacade implements AiAnythingVectorDbFacadeInterface
 {
     public function writeProductDataToVectorDb(array $transfers): void
     {
