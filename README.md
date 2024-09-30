@@ -1,10 +1,13 @@
 # Hackathon Project
 
-Created by team ***Ai Pathfinder***.
+Created by team ***Ai Pathfinder***, WINNER of the September 2024 Spryker Hackathon.
 
 ## Short Project Description
 
-xxx
+Semantic search on the user intent. Similar to AI Algolia but way cheaper. 
+
+### Jury evaluation:
+> _The team implemented  multilingual semantic search, ensuring precise matches across languages. A well-organized team contributed significantly to the success, impressing the jury with the accuracy and relevance of the results._
 
 ## 📹 Team Demo
 
