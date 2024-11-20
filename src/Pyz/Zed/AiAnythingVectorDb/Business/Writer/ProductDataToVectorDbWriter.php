@@ -1,18 +1,19 @@
 <?php
 
-namespace Pyz\Zed\ProductVectorDbStorage\Business\Writer;
+namespace Pyz\Zed\AiAnythingVectorDb\Business\Writer;
 
-use Pyz\Client\Pinecone\PineconeClientInterface;
-use Pyz\Zed\ProductVectorDbStorage\Persistence\ProductVectorDbStorageRepository;
+use Pyz\Client\AiAnythingVectorDb\AiAnythingVectorDbClientInterface;
+use Pyz\Zed\AiAnythingVectorDb\Persistence\AiAnythingVectorDbRepository;
 
 class ProductDataToVectorDbWriter
 {
     /**
-     * @param \Pyz\Client\Pinecone\PineconeClientInterface $pineconeClient
+     * @param \Pyz\Client\AiAnythingVectorDb\AiAnythingVectorDbClientInterface $pineconeClient
+     * @param \Pyz\Zed\AiAnythingVectorDb\Persistence\AiAnythingVectorDbRepository $repository
      */
     public function __construct(
-        protected readonly PineconeClientInterface $pineconeClient,
-        protected readonly ProductVectorDbStorageRepository $repository,
+        protected readonly AiAnythingVectorDbClientInterface $pineconeClient,
+        protected readonly AiAnythingVectorDbRepository $repository,
     )
     {
     }

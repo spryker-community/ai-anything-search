@@ -12,7 +12,7 @@ class AiAnythingSearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @var string
      */
-    public const PINECONE_CLIENT = 'client.pinecone';
+    public const AI_ANYTHING_VECTOR_DB_CLIENT = 'client.vector-db';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -23,7 +23,7 @@ class AiAnythingSearchDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $this->addPineconeClient($container);
+        $this->addVectorDbClient($container);
 
         return $container;
     }
@@ -33,8 +33,8 @@ class AiAnythingSearchDependencyProvider extends AbstractDependencyProvider
      *
      * @return void
      */
-    protected function addPineconeClient(Container $container): void
+    protected function addVectorDbClient(Container $container): void
     {
-        $container->set(self::PINECONE_CLIENT, $container->getLocator()->pinecone()->client());
+        $container->set(self::AI_ANYTHING_VECTOR_DB_CLIENT, $container->getLocator()->aiAnythingVectorDb()->client());
     }
 }

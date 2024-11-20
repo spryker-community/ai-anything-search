@@ -1,14 +1,14 @@
 <?php
 
-namespace Pyz\Zed\ProductVectorDbStorage\Communication\Plugin;
+namespace Pyz\Zed\AiAnythingVectorDb\Communication\Plugin;
 
-use Pyz\Zed\ProductVectorDbStorage\Business\ProductVectorDbStorageFacadeInterface;
+use Pyz\Zed\AiAnythingVectorDb\Business\AiAnythingVectorDbFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
- * @method ProductVectorDbStorageFacadeInterface getFacade()
+ * @method AiAnythingVectorDbFacadeInterface getFacade()
  */
 class ProductAbstractPublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {

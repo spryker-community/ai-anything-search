@@ -4,7 +4,7 @@ namespace Pyz\Client\AiAnythingSearch;
 
 use Pyz\Client\AiAnythingSearch\Expander\UserIntentQueryExpander;
 use Pyz\Client\AiAnythingSearch\Expander\UserIntentQueryExpanderInterface;
-use Pyz\Client\Pinecone\PineconeClientInterface;
+use Pyz\Client\AiAnythingVectorDb\AiAnythingVectorDbClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class AiAnythingSearchFactory extends AbstractFactory
@@ -20,10 +20,10 @@ class AiAnythingSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Client\Pinecone\PineconeClientInterface
+     * @return \Pyz\Client\AiAnythingVectorDb\AiAnythingVectorDbClientInterface
      */
-    protected function getPineconeClient(): PineconeClientInterface
+    protected function getPineconeClient(): AiAnythingVectorDbClientInterface
     {
-        return $this->getProvidedDependency(AiAnythingSearchDependencyProvider::PINECONE_CLIENT);
+        return $this->getProvidedDependency(AiAnythingSearchDependencyProvider::AI_ANYTHING_VECTOR_DB_CLIENT);
     }
 }
